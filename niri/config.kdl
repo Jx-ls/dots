@@ -69,6 +69,13 @@ input {
     // focus-follows-mouse max-scroll-amount="0%"
 }
 
+gestures {
+	dnd-edge-view-scroll {
+		trigger-width 180
+		max-speed 3000
+	}
+}
+
 cursor {
 	xcursor-size 18
 	hide-when-typing

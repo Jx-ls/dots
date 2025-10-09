@@ -16,6 +16,7 @@ CONFIGS=(
   waybar
   niri
   fuzzel
+  swaylock
 )
 
 for config in "${CONFIGS[@]}"; do

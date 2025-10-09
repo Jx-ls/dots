@@ -15,6 +15,7 @@ CONFIGS=(
   Thunar
   waybar
   niri
+  fuzzel
 )
 
 for config in "${CONFIGS[@]}"; do

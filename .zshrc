@@ -113,3 +113,5 @@ alias compass='ELECTRON_OZONE_PLATFORM_HINT=wayland mongodb-compass'
 alias spotify='ELECTRON_FORCE_DEVICE_SCALE_FACTOR=2 spotify --ozone-platform=wayland'
 alias vlc='QT_SCALE_FACTOR=2 vlc'
 
+export PATH="$HOME/.local/bin:$PATH"
+

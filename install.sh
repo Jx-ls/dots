@@ -14,7 +14,6 @@ CONFIGS=(
   spicetify
   Thunar
   waybar
-  zsh
 )
 
 for config in "${CONFIGS[@]}"; do

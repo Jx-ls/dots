@@ -14,6 +14,7 @@ CONFIGS=(
   spicetify
   Thunar
   waybar
+  niri
 )
 
 for config in "${CONFIGS[@]}"; do

@@ -8,13 +8,13 @@ export ZSH="$HOME/.config/zsh/.oh-my-zsh"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="duellj"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" "jonathan" "peepcode" "frontcube" "candy" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -112,6 +112,5 @@ alias code='ELECTRON_FORCE_DEVICE_SCALE_FACTOR=2 codium --ozone-platform=wayland
 alias compass='ELECTRON_OZONE_PLATFORM_HINT=wayland mongodb-compass'
 alias spotify='ELECTRON_FORCE_DEVICE_SCALE_FACTOR=2 spotify --ozone-platform=wayland'
 alias vlc='QT_SCALE_FACTOR=2 vlc'
-
 export PATH="$HOME/.local/bin:$PATH"
 

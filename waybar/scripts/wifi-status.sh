@@ -82,81 +82,81 @@ if [ -z "$wifi_info" ]; then
 else
   # Some defaults
   ip_address="127.0.0.1"
-  # gateway="127.0.0.1"
-  # mac_address="N/A"
+  gateway="127.0.0.1"
+  mac_address="N/A"
   security=$(echo "$wifi_info" | awk -F: '{print $4}')
-  # bssid="N/A"
+  bssid="N/A"
   chan="N/A"
-  # rssi="N/A"
-  # rx_bitrate=""
-  # tx_bitrate=""
-  # phy_mode=""
+  rssi="N/A"
+  rx_bitrate=""
+  tx_bitrate=""
+  phy_mode=""
   signal=$(echo "$wifi_info" | awk -F: '{print $3}')
 
   active_device=$(nmcli -t -f DEVICE,STATE device status |
     grep -w "connected" |
     grep -v -E "^(dummy|lo:)" |
-    awk -F: '{print $1}') |
-	head -n 1
+    awk -F: '{print $1}' |
+	head -n 1)
 
   if [ -n "$active_device" ]; then
     output=$(nmcli -e no -g ip4.address,ip4.gateway,general.hwaddr device show "$active_device")
 
     ip_address=$(echo "$output" | sed -n '1p')
-    # gateway=$(echo "$output" | sed -n '2p')
-    # mac_address=$(echo "$output" | sed -n '3p')
+    gateway=$(echo "$output" | sed -n '2p')
+    mac_address=$(echo "$output" | sed -n '3p')
 
     line=$(nmcli -e no -t -f active,bssid,chan,freq device wifi | grep "^yes")
 
-    # bssid=$(echo "$line" | awk -F':' '{print $2":"$3":"$4":"$5":"$6":"$7}')
+    bssid=$(echo "$line" | awk -F':' '{print $2":"$3":"$4":"$5":"$6":"$7}')
     chan=$(echo "$line" | awk -F':' '{print $8}')
     freq=$(echo "$line" | awk -F':' '{print $9}')
     chan="$chan ($freq)"
 
-    # if command -v iw &>/dev/null; then
-    # iw_output=$(iw dev "$active_device" station dump)
-    # rssi=$(echo "$iw_output" | grep "signal:" | awk '{print $2 " dBm"}')
+    if command -v iw &>/dev/null; then
+    iw_output=$(iw dev "$active_device" station dump)
+    rssi=$(echo "$iw_output" | grep "signal:" | awk '{print $2 " dBm"}')
 
     # Upload speed
-    # rx_bitrate=$(echo "$iw_output" | grep "rx bitrate:" | awk '{print $3 " " $4}')
+    rx_bitrate=$(echo "$iw_output" | grep "rx bitrate:" | awk '{print $3 " " $4}')
 
     # Download speed
-    # tx_bitrate=$(echo "$iw_output" | grep "tx bitrate:" | awk '{print $3 " " $4}')
+    tx_bitrate=$(echo "$iw_output" | grep "tx bitrate:" | awk '{print $3 " " $4}')
 
     # Physical Layer Mode
-    # if echo "$iw_output" | grep -E -q "rx bitrate:.* VHT"; then
-    #   phy_mode="802.11ac" # Wi-Fi 5
-    # elif echo "$iw_output" | grep -E -q "rx bitrate:.* HT"; then
-    #   phy_mode="802.11n" # Wi-Fi 4
-    # elif echo "$iw_output" | grep -E -q "rx bitrate:.* HE"; then
-    #   phy_mode="802.11ax" # Wi-Fi 6
-    # fi
-    # fi
+    if echo "$iw_output" | grep -E -q "rx bitrate:.* VHT"; then
+      phy_mode="802.11ac" # Wi-Fi 5
+    elif echo "$iw_output" | grep -E -q "rx bitrate:.* HT"; then
+      phy_mode="802.11n" # Wi-Fi 4
+    elif echo "$iw_output" | grep -E -q "rx bitrate:.* HE"; then
+      phy_mode="802.11ax" # Wi-Fi 6
+    fi
+    fi
 
     # Get the current Wi-Fi ESSID
     essid=$(echo "$wifi_info" | awk -F: '{print $2}')
 
     tooltip="${essid}\n"
-    tooltip+="\nIP Address: ${ip_address}"
-    # tooltip+="\nRouter:      ${gateway}"
-    # tooltip+="\nMAC Address: ${mac_address}"
-    tooltip+="\nSecurity:   ${security}"
-    # tooltip+="\nBSSID:       ${bssid}"
-    tooltip+="\nChannel:    ${chan}"
-    # tooltip+="\nRSSI:        ${rssi}"
-    tooltip+="\nStrength:   ${signal} / 100"
+    tooltip+="\nIP Address:  ${ip_address}"
+    tooltip+="\nRouter:      ${gateway}"
+    tooltip+="\nMAC Address: ${mac_address}"
+    tooltip+="\nSecurity:    ${security}"
+    tooltip+="\nBSSID:       ${bssid}"
+    tooltip+="\nChannel:     ${chan}"
+    tooltip+="\nRSSI:        ${rssi}"
+    tooltip+="\nStrength:    ${signal} / 100"
 
-    # if [ -n "$rx_bitrate" ]; then
-    #   tooltip+="\nRx Rate:     ${rx_bitrate}"
-    # fi
+    if [ -n "$rx_bitrate" ]; then
+      tooltip+="\nRx Rate:     ${rx_bitrate}"
+    fi
 
-    # if [ -n "$tx_bitrate" ]; then
-    #   tooltip+="\nTx Rate:     ${tx_bitrate}"
-    # fi
+    if [ -n "$tx_bitrate" ]; then
+      tooltip+="\nTx Rate:     ${tx_bitrate}"
+    fi
 
-    # if [ -n "$phy_mode" ]; then
-    #   tooltip+="\nPHY Mode:    ${phy_mode}"
-    # fi
+    if [ -n "$phy_mode" ]; then
+      tooltip+="\nPHY Mode:    ${phy_mode}"
+    fi
   fi
 fi
 

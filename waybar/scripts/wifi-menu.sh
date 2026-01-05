@@ -6,6 +6,11 @@
 # Rofi config
 config="$HOME/.config/rofi/wifi-menu.rasi"
 
+frequent=$(
+	echo "guest69"
+	echo "data"
+)
+
 options=$(
   echo "Manual Entry"
   echo "Disable Wi-Fi"
@@ -38,8 +43,8 @@ while true; do
 
   case "$wifi_status" in
   *"enabled"*)
-    selected_option=$(echo "$options"$'\n'"$(wifi_list)" |
-      rofi -dmenu -i -selected-row 1 -config "${config}" -p " " || pkill -x rofi)
+    selected_option=$(echo "$frequent"$'\n'"$options"$'\n'"$(wifi_list)" |
+      rofi -dmenu -i -config "${config}" -p " " || pkill -x rofi)
     ;;
   *"disabled"*)
     selected_option=$(echo "$option_disabled" |
@@ -52,6 +57,13 @@ while true; do
 
   # Actions based on selected option
   case "$selected_option" in
+  "data")
+	nmcli con up data
+	notify-send "connected to data"
+	exit
+	;;
+  "guest69")
+	nmcli con up guest69
   "")
     exit
     ;;

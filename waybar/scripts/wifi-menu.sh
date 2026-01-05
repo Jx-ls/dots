@@ -64,6 +64,9 @@ while true; do
 	;;
   "guest69")
 	nmcli con up guest69
+	notify-send "connect to guest secured"
+	exit
+	;;
   "")
     exit
     ;;

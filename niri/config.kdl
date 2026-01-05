@@ -373,6 +373,11 @@ window-rule {
 }
 
 window-rule {
+  match app-id="spotify"
+  open-maximized true
+}
+
+window-rule {
   match app-id="kitty"
   default-column-width { proportion 0.60; }
 }

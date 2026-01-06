@@ -52,7 +52,7 @@ while true; do
 
 	case "$wifi_status" in
 	*"enabled"*)
-		selected_option=$(echo "$frequent"$'\n'"$options"$'\n'"$(wifi_list)" |
+		selected_option=$(echo "$options"$'\n'"$(wifi_list)" |
 			rofi -dmenu -i -config "${config}" -p " " || pkill -x rofi)
 		;;
 	*"disabled"*)
